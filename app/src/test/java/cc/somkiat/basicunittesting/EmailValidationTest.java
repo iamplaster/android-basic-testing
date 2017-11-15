@@ -27,10 +27,24 @@ public class EmailValidationTest {
     }
 
     @Test
+    public void nameIsNotEmpty() {
+        user.setEmail("Hello@gmail.com");
+        boolean result = emailValidation.isEmptyCheck(user.getEmail());
+        assertTrue("It's not Empty", result);
+    }
+
+    @Test
     public void emailIsNull(){
         user.setEmail(null);
         boolean result = emailValidation.isNullCheck(user.getEmail());
         assertFalse("Not correct, It's Null", result);
+    }
+
+    @Test
+    public void nameIsNotNull(){
+        user.setEmail("helloagain@gmail.com");
+        boolean result = emailValidation.isNullCheck(user.getEmail());
+        assertTrue("It's not Null", result);
     }
 
     @Test

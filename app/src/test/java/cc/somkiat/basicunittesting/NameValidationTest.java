@@ -24,12 +24,24 @@ public class NameValidationTest {
         boolean result = nameValidation.isEmptyCheck(user.getName());
         assertFalse("Not correct, It's Empty", result);
     }
+    @Test
+    public void nameIsNotEmpty() {
+        user.setName("Hello");
+        boolean result = nameValidation.isEmptyCheck(user.getName());
+        assertTrue("It's not Empty", result);
+    }
 
     @Test
     public void nameIsNull(){
         user.setName(null);
         boolean result = nameValidation.isNullCheck(user.getName());
         assertFalse("Not correct, It's Null", result);
+    }
+    @Test
+    public void nameIsNotNull(){
+        user.setName("helloagain");
+        boolean result = nameValidation.isNullCheck(user.getName());
+        assertTrue("It's not Null", result);
     }
 
     @Test
