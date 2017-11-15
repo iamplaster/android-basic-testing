@@ -3,6 +3,7 @@ package cc.somkiat.basicunittesting;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,10 +21,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         nameInput = findViewById(R.id.userNameInput);
         emailInput = findViewById(R.id.emailInput);
+        Button saveButton = findViewById(R.id.saveButton);
+        Button revertButton = findViewById(R.id.revertButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSaveClick();
+            }
+        });
+        revertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRevertClick();
+            }
+        });
     }
 
 
-    public void onSaveClick(View view) {
+    public void onSaveClick() {
         UserProfile userProfile = new UserProfile();
         NameValidation nameValidation = new NameValidation();
         EmailValidation emailValidation = new EmailValidation();
@@ -34,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         userProfile.clearReport();
     }
 
-    public void onRevertClick(View view) {
+    public void onRevertClick() {
         nameInput.setText("");
         emailInput.setText("");
     }
