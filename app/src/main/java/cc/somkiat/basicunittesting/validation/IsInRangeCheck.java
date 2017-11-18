@@ -1,10 +1,16 @@
 package cc.somkiat.basicunittesting.validation;
 
-public class IsInRangeCheck {
-    public boolean isInRangeCheck(String name){
-        if(name.length() <= 1 || name.length() > 20){
-            return false;
-        }
-        return true;
+import cc.somkiat.basicunittesting.MyValidation;
+
+public class IsInRangeCheck implements MyValidation{
+
+    @Override
+    public boolean isValid(String input) {
+        return !(input.length() <= 1 || input.length() > 20);
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return "It's invalid input length";
     }
 }

@@ -7,13 +7,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import cc.somkiat.basicunittesting.model.User;
-import cc.somkiat.basicunittesting.model.UserProfile;
+import java.util.ArrayList;
+import java.util.List;
+
+import cc.somkiat.basicunittesting.validation.IsEmailPatternCheck;
+import cc.somkiat.basicunittesting.validation.IsEmptyCheck;
+import cc.somkiat.basicunittesting.validation.IsInRangeCheck;
+import cc.somkiat.basicunittesting.validation.IsNullCheck;
+import cc.somkiat.basicunittesting.validation.IsSpecialCharCheck;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText nameInput;
     EditText emailInput;
+    Boolean completeFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +47,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onSaveClick() {
-        UserProfile userProfile = new UserProfile();
-        NameValidation nameValidation = new NameValidation();
-        EmailValidation emailValidation = new EmailValidation();
-        userProfile.setChecker(nameValidation, emailValidation);
-        userProfile.setName(nameInput.getText().toString());
-        userProfile.setEmail(emailInput.getText().toString());
-        Toast.makeText(getApplicationContext(), userProfile.getReport(), Toast.LENGTH_SHORT).show();
-        userProfile.clearReport();
+        List<MyValidation> validations = new ArrayList<>();
+        validations.add(new IsEmptyCheck());
+        validations.add(new IsNullCheck());
+        validations.add(new IsInRangeCheck());
+        validations.add(new IsSpecialCharCheck());
+        IsEmailPatternCheck isEmailPatternCheck = new IsEmailPatternCheck();
+        completeFlag = true;
+        for(MyValidation validation : validations){
+            if(!validation.isValid(nameInput.getText().toString())) {
+                Toast.makeText(getApplicationContext(), validation.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                completeFlag = false;
+            }
+        }
+        if(!isEmailPatternCheck.isValid(emailInput.getText().toString())){
+        Toast.makeText(getApplicationContext(), isEmailPatternCheck.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        completeFlag = false;
+        }
+        if(completeFlag){
+            Toast.makeText(getApplicationContext(), "COMPLETE", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+
     }
 
     public void onRevertClick() {
